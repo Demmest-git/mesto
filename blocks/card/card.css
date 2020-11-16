@@ -2,9 +2,12 @@
 @import url(./__info/card__info.css);
 @import url(./__name/card__name.css);
 @import url(./__like/card__like.css);
+@import url(./__like/_active/card__like_active.css);
+@import url(./__trash/card__trash.css);
 
 .card {
     list-style: none;
     background-color: white;
     border-radius: 10px;
+    position: relative;
 }

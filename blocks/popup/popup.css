@@ -4,14 +4,22 @@
 @import url(./__form/popup__form.css);
 @import url(./__input/popup__input.css);
 @import url(./__title/popup__title.css);
+@import url(./__image/popup__image.css);
+@import url(./__img-title/popup__img-title.css);
+@import url(./__img-container/popup__img-container.css);
+@import url(./__button-create/popup__button-create.css);
 
 .popup {
-    
+    display: flex;
     width:100%;
     min-height:100%;
     background-color: rgba(0,0,0,0.5);
     overflow:hidden;
     position:fixed;
     top:0px;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+    justify-content: center;
+    align-items: center;
 }

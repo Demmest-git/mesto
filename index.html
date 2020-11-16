@@ -27,48 +27,7 @@
                 </section>
                 <section class="elements">
                     <ul class="elements__cards">
-                        <li class="card">
-                            <img src="./images/zemlia.jpg" alt="изображение Земли" class="card__image">
-                            <div class="card__info">
-                                <h2 class="card__name">Земля</h2>
-                                <button type="button" aria-label="Like" class="card__like"></button>
-                            </div>
-                        </li>
-                        <li class="card">
-                            <img src="./images/shihan.jpg" alt="Горы Шихан" class="card__image">
-                            <div class="card__info">
-                                <h2 class="card__name">Гора Шихан</h2>
-                                <button type="button" aria-label="Like" class="card__like"></button>
-                            </div>
-                        </li>
-                        <li class="card">
-                            <img src="./images/victoria.jpg" alt="Изображение водопада Виктория" class="card__image">
-                            <div class="card__info">
-                                <h2 class="card__name">Водопад Виктория</h2>
-                                <button type="button" aria-label="Like" class="card__like"></button>
-                            </div>
-                        </li>
-                        <li class="card">
-                            <img src="./images/taiga.jpg" alt="Изображение тайги" class="card__image">
-                            <div class="card__info">
-                                <h2 class="card__name">Тайга</h2>
-                                <button type="button" aria-label="Like" class="card__like"></button>
-                            </div>
-                        </li>
-                        <li class="card">
-                            <img src="./images/dubai.jpg" alt="Дубай" class="card__image">
-                            <div class="card__info">
-                                <h2 class="card__name">Дубай</h2>
-                                <button type="button" aria-label="Like" class="card__like"></button>
-                            </div>
-                        </li>
-                        <li class="card">
-                            <img src="./images/pizanskya_tower.jpeg" alt="Пизанская башня" class="card__image">
-                            <div class="card__info">
-                                <h2 class="card__name">Пизанская башня</h2>
-                                <button type="button" aria-label="Like" class="card__like"></button>
-                            </div>
-                        </li>
+
                     </ul>
                 </section>
             </main>
@@ -76,18 +35,51 @@
                 <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
             </footer>
         </div>
-        <div class="popup">
+        <div class="popup popup_profile">
             <div class="popup__container">
                 <h3 class="popup__title">Редактировать профиль</h3>
-                <form class="popup__form" name="edit-profile">
+                <form class="popup__form popup__form_type_profile" name="edit-profile">
                     <input type="text" class="popup__input popup__input_profile-name" name="name" placeholder="Имя" required>
                     <input type="text" class="popup__input popup__input_profile-decoration" name="decoration" placeholder="Занятие" required>
                     <input type="submit" class="popup__button-save" name="submit" value="Сохранить">
                     <button type="reset" aria-label="Close" class="popup__button-close"></button>
                 </form>
-                
             </div>
         </div>
+
+        <div class="popup popup_zoom">
+            <div class="popup__img-container">
+                <button type="button" class="popup__button-close"></button>
+                <img src="./" class="popup__image" alt="Фото">
+                <p class="popup__img-title"></p>
+            </div>
+        </div>
+
+        <div class="popup popup_create">
+            <div class="popup__container">
+                <h3 class="popup__title">Новое место</h3>
+                <form class="popup__form popup__form_type_create" name="create-card">
+                    <input type="text" class="popup__input popup__input_create_name" name="addName" placeholder="Название" minlength="2" required>
+                    <input type="text" class="popup__input popup__input_create_link" name="link" placeholder="Ссылка на картинку" minlength="2" required>
+                    <input type="submit" class="popup__button-create" name="create" value="Создать">
+                    <button type="button" class="popup__button-close"></button>
+                </form>
+            </div>
+        </div>
+
+        <template class="card-temp">
+            <li class="card">
+                <img src="./images/zemlia.jpg" alt="изображение Земли" class="card__image">
+                <div class="card__info">
+                    <h2 class="card__name">Земля</h2>
+                    <button type="button" aria-label="Like" class="card__like"></button>
+                </div>
+                <button type="button" class="card__trash">
+                    <img src="./images/trash.svg" alt="Корзина">
+                </button> 
+            </li>
+        </template>
+
         <script src="./scripts/script.js"></script>
     </body>
 </html>
