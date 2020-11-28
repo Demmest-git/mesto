@@ -3,7 +3,7 @@ const decoration = document.querySelector(".profile__decoration");
 const formElement = document.querySelector(".popup__form_type_profile");
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('.popup_profile');
-const buttonClose = document.querySelectorAll('.popup__button-close');
+const buttonCloseList = document.querySelectorAll('.popup__button-close');
 const nameInput = document.querySelector(".popup__input_profile-name");
 const jobInput = document.querySelector(".popup__input_profile-decoration");
 const formAdd = document.querySelector(".popup__form_type_create");
@@ -154,7 +154,7 @@ function formCreate(evt) {
 
 initialCards.forEach(elem => addNewCard(createCard(elem.name, elem.link)));
 
-buttonClose.forEach(element => {
+buttonCloseList.forEach(element => {
     element.addEventListener("click", (evt) => {
         const popup = evt.target.closest(".popup");
         closePopup(popup);
