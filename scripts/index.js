@@ -52,7 +52,7 @@ const validationConfig = {
     inputErrorClass: 'popup__input_state_invalid'
 };
 
-import { Card } from "./card.js";
+import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 
 const profileFormValidate = new FormValidator(validationConfig, formElement);
@@ -64,13 +64,13 @@ newCardFormValidate.enableValidation();
 function openPopup(elem) {
     elem.classList.add('popup_opened');
     document.addEventListener('keydown', keyEsc);
-    elem.addEventListener('mousedown', popupMousedown);
+    elem.addEventListener('mousedown', closeByOverlay);
 }
 
 function closePopup(elem) {
     elem.classList.remove('popup_opened');
     document.removeEventListener('keydown', keyEsc);
-    elem.removeEventListener('mousedown', popupMousedown);
+    elem.removeEventListener('mousedown', closeByOverlay);
 }
 
 function showImage(title, link) {
@@ -85,11 +85,9 @@ function openEditProfile() {
     openPopup(popupEditProfile);
 }
 
-function popupMousedown(evt) {
+function closeByOverlay(evt) {
     if(evt.target.classList.contains('popup')) {
-        const clickOnPopup = evt.target.closest('.popup');
-        closePopup(clickOnPopup);
-        cleanInputErrors(clickOnPopup);
+        closePopup(evt.target);
     }
 }
 
@@ -103,13 +101,7 @@ function closeActivePopup(evt) {
     const activePopup = document.querySelector('.popup_opened');
     if(activePopup) {
         closePopup(activePopup);
-        cleanInputErrors(activePopup);
     }
-}
-
-function cleanInputErrors(elem) {
-    profileFormValidate.enableValidation();
-    newCardFormValidate.enableValidation();
 }
 
 function formSubmitHandler(evt) {
@@ -145,20 +137,19 @@ buttonCloseList.forEach(element => {
     element.addEventListener("click", (evt) => {
         const popup = evt.target.closest(".popup");
         closePopup(popup);
-        cleanInputErrors(popup);
     });
 });
 
 buttonEditProfile.addEventListener("click", () => {
     openEditProfile();
-    profileFormValidate.enableValidation();
+    profileFormValidate.clearErrors();
 });
 formElement.addEventListener('submit', formSubmitHandler);
 buttonAddCard.addEventListener("click", () => {
     createName.value = '';
     createLink.value = '';
     openPopup(createCardPopup);
-    newCardFormValidate.enableValidation();
+    newCardFormValidate.clearErrors();
 });
 formAdd.addEventListener('submit', formCreate);
 

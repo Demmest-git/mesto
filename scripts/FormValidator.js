@@ -3,6 +3,7 @@ export class FormValidator {
         this._config = config;
         this._checkingForm = checkingForm;
         this._inputsList = checkingForm.querySelectorAll(this._config.inputSelector);
+        this._submitButton = checkingForm.querySelector(this._config.submitButtonSelector);
     }
 
     _showError (input) {
@@ -25,27 +26,35 @@ export class FormValidator {
         }
     }
     
-    _setButtonState(button, isActive) {
+    _setButtonState(isActive) {
         if(isActive) {
-            button.classList.remove(this._config.inactiveButtonClass);
-            button.disabled = false;
+            this._submitButton.classList.remove(this._config.inactiveButtonClass);
+            this._submitButton.disabled = false;
         } else {
-            button.classList.add(this._config.inactiveButtonClass);
-            button.disabled = true;
+            this._submitButton.classList.add(this._config.inactiveButtonClass);
+            this._submitButton.disabled = true;
         }
     }
-    
+
     _setEventListeners(form) {
-        const submitButton = form.querySelector(this._config.submitButtonSelector);
     
         this._inputsList.forEach((input) => {
             input.addEventListener('input', () => {
                 this._checkInputValidity(input);
-                this._setButtonState(submitButton, form.checkValidity());
+                this._setButtonState(form.checkValidity());
             });
         });
     }
     
+    clearErrors = () => {
+        this._inputsList.forEach((input) => {
+            const error = this._checkingForm.querySelector(`#${input.id}-error`);
+            error.textContent = '';
+            input.classList.remove(this._config.inputErrorClass);
+            this._setButtonState(this._checkingForm.checkValidity());
+        });
+    }
+
     enableValidation() {
         this._setEventListeners(this._checkingForm);
     
@@ -57,8 +66,8 @@ export class FormValidator {
             this._hideError(input);
         });
     
-        const submitButton = this._checkingForm.querySelector(this._config.submitButtonSelector);
-        this._setButtonState(submitButton, this._checkingForm.checkValidity());
+        
+        this._setButtonState(this._checkingForm.checkValidity());
 
     }
 }
