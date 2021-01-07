@@ -1,10 +1,10 @@
-export class Card {
-    constructor(link, title, cardSelector, showImage) {
+export default class Card {
+    constructor(link, title, cardSelector, { handleCardClick }) {
         this._cardSelector = cardSelector;
         this._link = link;
         this._title = title;
         this._cardTemplate = document.querySelector(this._cardSelector);
-        this._showImage = showImage;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -24,7 +24,7 @@ export class Card {
         this._element.querySelector('.card__like').addEventListener('click', this._handleLikeButton);
         this._element.querySelector('.card__trash').addEventListener('click', this._deleteCard);
         this._cardImage.addEventListener('click', () =>{
-            this._showImage(this._title, this._link);
+            this._handleCardClick(this._title, this._link);
         });
     }
 

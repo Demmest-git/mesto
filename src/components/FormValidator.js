@@ -1,4 +1,4 @@
-export class FormValidator {
+export default class FormValidator {
     constructor(config, checkingForm) {
         this._config = config;
         this._checkingForm = checkingForm;
@@ -46,7 +46,7 @@ export class FormValidator {
         });
     }
     
-    clearErrors = () => {
+    clearErrors(){
         this._inputsList.forEach((input) => {
             this._hideError (input);
             this._setButtonState(this._checkingForm.checkValidity());
