@@ -7,7 +7,10 @@ export default class UserInfo {
   getUserInfo() {
     const name = this._name.textContent;
     const job = this._job.textContent;
-    return ([name, job]);
+    return {
+      profileName: name,
+      profileSpec: job
+    };
   }
 
   setUserInfo(newName, newJob) {

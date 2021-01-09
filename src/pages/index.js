@@ -35,7 +35,7 @@ profileFormValidate.enableValidation();
 const newCardFormValidate = new FormValidator(validationConfig, formAdd);
 newCardFormValidate.enableValidation();
 
-const userInfo = new UserInfo(".profile__name", ".profile__decoration");
+
 
 const defaultCardList = new Section({
     items: initialCards,
@@ -57,24 +57,28 @@ const defaultCardList = new Section({
 
 buttonEditProfile.addEventListener('click', function(){
     const popupProfile = new PopupWithForm('.popup_profile', {
-      handleFormSubmit: (evt) => {
-        evt.preventDefault();
-        const values = popupProfile._getInputValues();
-        userInfo.setUserInfo(values[0], values[1]);
-        popupProfile.close();
+      handleFormSubmit: (values) => {
+        console.log(values);
+        userInfo.setUserInfo(values.name, values.decoration);
+        console.log(userInfo.setUserInfo(values.name, values.decoration))
+        // popupProfile.close();
       }
     });
-    popupProfile._setInputValues(userInfo.getUserInfo());
+    const userName = userInfo.getUserInfo();
+    console.log(userName);
+    nameInput.value = userName.profileName;
+    jobInput.value = userName.profileSpec;
     popupProfile.open();
     profileFormValidate.clearErrors();
 });
 
+const userInfo = new UserInfo(".profile__name", ".profile__decoration");
 
 buttonAddCard.addEventListener('click', function(){
     const popupNewCard = new PopupWithForm('.popup_create', {
-      handleFormSubmit: (evt) => {
-        evt.preventDefault();
-        const values = popupNewCard._getInputValues();
+      handleFormSubmit: (values) => {
+        // evt.preventDefault();
+        // const values = popupNewCard._getInputValues();
         const data = {
           name: values[0],
           link: values[1]
