@@ -5,8 +5,12 @@ export default class Section {
       this._container = document.querySelector(containerSelector);
     }
   
-    addItem(element) {
-      this._renderer(element);
+    addItem(element, standartCard = true) {
+      if (standartCard) {
+        this._container.append(element);
+      } else {
+        this._container.prepend(element);
+      }
     }
   
     clear() {
@@ -16,7 +20,7 @@ export default class Section {
     renderItems() {
       this.clear();
       this._items.forEach(element => {
-        this.addItem(element);
+        this._renderer(element);
       });
     }
   }
