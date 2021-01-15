@@ -37,6 +37,23 @@ newCardFormValidate.enableValidation();
 
 const popupWithImage = new PopupWithImage('.popup_zoom', '.popup__image', '.popup__img-title');
 
+const popupNewCard = new PopupWithForm('.popup_create', {
+  handleFormSubmit: (values) => {
+    const data = {
+      name: values.addName,
+      link: values.link
+    };
+    const newCardElement = createCard(data.link, data.name, cardTemplateSelector).generateCard();
+    defaultCardList.addItem(newCardElement, false);
+  }
+});
+
+const popupProfile = new PopupWithForm('.popup_profile', {
+  handleFormSubmit: (values) => {
+    userInfo.setUserInfo(values.name, values.decoration);
+  }
+});
+
 function createCard(link, title, cardTemplateSelector){
   return new Card(link, title, cardTemplateSelector, {
     handleCardClick: (link, title) => {
@@ -59,11 +76,6 @@ const defaultCardList = new Section({
   defaultCardList.renderItems();
 
 buttonEditProfile.addEventListener('click', function(){
-    const popupProfile = new PopupWithForm('.popup_profile', {
-      handleFormSubmit: (values) => {
-        userInfo.setUserInfo(values.name, values.decoration);
-      }
-    });
     const userName = userInfo.getUserInfo();
     nameInput.value = userName.profileName;
     jobInput.value = userName.profileJob;
@@ -74,16 +86,9 @@ buttonEditProfile.addEventListener('click', function(){
 const userInfo = new UserInfo(".profile__name", ".profile__decoration");
 
 buttonAddCard.addEventListener('click', function(){
-    const popupNewCard = new PopupWithForm('.popup_create', {
-      handleFormSubmit: (values) => {
-        const data = {
-          name: values.addName,
-          link: values.link
-        };
-        const newCardElement = createCard(data.link, data.name, cardTemplateSelector).generateCard();
-        defaultCardList.addItem(newCardElement, false);
-      }
-    });
     popupNewCard.open();
     newCardFormValidate.clearErrors();
   });
+
+popupProfile.setEventListeners();
+popupNewCard.setEventListeners();
