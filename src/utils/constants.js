@@ -16,6 +16,14 @@ export const container = document.querySelector('.elements__cards');
 export const popupImg = document.querySelector('.popup__image');
 export const popupName = document.querySelector('.popup__img-title');
 export const cardTemplateSelector = '.card-temp';
+export const formEditAvatar = document.querySelector('.popup__form_type_avatar');
+export const formConfirmDelete = document.querySelector('.popup__form_type_delete');
+export const buttonEditAvatar = document.querySelector('.profile__avatar-edit');
+export const popupEditAvatarSelector = '.popup_edit-avatar';
+export const popupCardDeleteSelector = '.popup_delete';
+export const avatarImageSelector = '.profile__avatar-img';
+export const buttonConfirmDelete = document.querySelector('.popup__button-delete');
+
 
 
 export const initialCards = [
