@@ -29,11 +29,14 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 const profileFormValidate = new FormValidator(validationConfig, formElement);
 profileFormValidate.enableValidation();
 const newCardFormValidate = new FormValidator(validationConfig, formAdd);
 newCardFormValidate.enableValidation();
+
+const api = new Api({address: 'https://mesto.nomoreparties.co/v1/', token: '7b08d339-716f-4c25-b8bf-2cb242815db3', groupId: 'cohort-19'});
 
 const popupWithImage = new PopupWithImage('.popup_zoom', '.popup__image', '.popup__img-title');
 
@@ -63,7 +66,7 @@ function createCard(link, title, cardTemplateSelector){
 }
 
 const defaultCardList = new Section({
-    items: initialCards,
+    // items: initialCards,
     renderer: (item) => {
       const link = item.link;
       const title = item.name;
@@ -73,7 +76,7 @@ const defaultCardList = new Section({
       }
   }, ".elements__cards");
   
-  defaultCardList.renderItems();
+  // defaultCardList.renderItems();
 
 buttonEditProfile.addEventListener('click', function(){
     const userName = userInfo.getUserInfo();
@@ -92,3 +95,12 @@ buttonAddCard.addEventListener('click', function(){
 
 popupProfile.setEventListeners();
 popupNewCard.setEventListeners();
+
+console.log(api.getInitialCards());
+
+api.getInitialCards()
+    .then(result => {
+        console.log(result);
+        defaultCardList.renderItems(result)
+    })
+    .catch(err => console.log('Ошибка при получении сообщений'));
