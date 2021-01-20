@@ -18,6 +18,40 @@ export default class Api {
             return Promise.reject(`Ошибка ${response.status}`);
         })
     }
+
+    getUserInfo(){
+        return fetch(`${this._address}${this._groupId}/users/me`, {
+            headers: {
+                authorization: this._token
+            }
+        })
+        .then(response => {
+            if(response.ok){
+                return response.json();
+            }
+            return Promise.reject(`Ошибка ${response.status}`);
+        })
+    }
+
+    setUserInfo(item){
+        fetch(`${this._address}${this._groupId}/users/me`, {
+            method: 'PATCH',
+            headers: {
+              authorization: this._token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: item.name,
+              about: item.decoration
+            })
+        })
+        .then(response => {
+            if(response.ok){
+                return response.json();
+            }
+            return Promise.reject(`Ошибка ${response.status}`);
+        })
+    }
   
     // другие методы работы с API
   }

@@ -68,6 +68,7 @@ const popupNewCard = new PopupWithForm('.popup_create', {
 const popupProfile = new PopupWithForm('.popup_profile', {
   handleFormSubmit: (values) => {
     userInfo.setUserInfo(values.name, values.decoration);
+    api.setUserInfo(values)
   }
 });
 
@@ -79,6 +80,9 @@ const popupEditAvatar = new PopupWithForm(popupEditAvatarSelector, {
 
 const popupDeleteAvatar = new PopupWithForm(popupCardDeleteSelector, {
   handleFormSubmit: (values) => {
+    popupDeleteAvatar.cardObject.deleteCard();
+    popupDeleteAvatar.close();
+    popupDeleteAvatar.cardObject = "";
   }
 });
 
@@ -87,10 +91,12 @@ function createCard(link, title, buttonDelete, cardTemplateSelector){
     handleCardClick: (link, title) => {
       popupWithImage.open(link, title);  
     },
-    handleTrashClick: () => {
-      popupDeleteAvatar.open();  
+    handleTrashClick: (cardObject) => {
+      popupDeleteAvatar.open();
+      popupDeleteAvatar.cardObject = cardObject;
+      console.log(popupDeleteAvatar.cardObject)
     }
-  })
+  }).generateCard();
 }
 
 const defaultCardList = new Section({
@@ -99,8 +105,8 @@ const defaultCardList = new Section({
       const link = item.link;
       const title = item.name;
       const cardElement = createCard(link, title, buttonConfirmDelete, cardTemplateSelector);
-      const cardGenerated = cardElement.generateCard();
-      defaultCardList.addItem(cardGenerated, true);
+      // const cardGenerated = cardElement.generateCard();
+      defaultCardList.addItem(cardElement, true);
       }
   }, ".elements__cards");
   
@@ -120,6 +126,7 @@ buttonEditAvatar.addEventListener('click', function(){
 
 const userInfo = new UserInfo('.profile__name', '.profile__decoration', avatarImageSelector);
 
+
 buttonAddCard.addEventListener('click', function(){
     popupNewCard.open();
     newCardFormValidate.clearErrors();
@@ -130,11 +137,19 @@ popupNewCard.setEventListeners();
 popupEditAvatar.setEventListeners();
 popupDeleteAvatar.setEventListeners();
 
-console.log(api.getInitialCards());
-
 api.getInitialCards()
     .then(result => {
-        console.log(result);
         defaultCardList.renderItems(result)
     })
     .catch(err => console.log('Ошибка при получении сообщений'));
+
+let dataUser = {};
+
+api.getUserInfo()
+    .then(result => {
+      userInfo.setUserInfo(result.name, result.about);
+      userInfo.setUserAvatar(result.avatar);
+        // dataUser = result;
+        // console.log(dataUser);
+    })
+    .catch(err => console.log('Ошибка при получении данных'));
