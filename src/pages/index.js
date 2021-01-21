@@ -56,11 +56,12 @@ const popupWithImage = new PopupWithImage('.popup_zoom', '.popup__image', '.popu
 
 const popupNewCard = new PopupWithForm('.popup_create', {
   handleFormSubmit: (values) => {
+    api.addNewCard(values);
     const data = {
       name: values.addName,
       link: values.link
     };
-    const newCardElement = createCard(data.link, data.name, buttonConfirmDelete, cardTemplateSelector).generateCard();
+    const newCardElement = createCard(data.link, data.name, buttonConfirmDelete, cardTemplateSelector);
     defaultCardList.addItem(newCardElement, false);
   }
 });
@@ -75,6 +76,7 @@ const popupProfile = new PopupWithForm('.popup_profile', {
 const popupEditAvatar = new PopupWithForm(popupEditAvatarSelector, {
   handleFormSubmit: (values) => {
     userInfo.setUserAvatar(values.avatar);
+    api.setUserAvatar(values);
   }
 });
 
