@@ -23,6 +23,7 @@ export const popupEditAvatarSelector = '.popup_edit-avatar';
 export const popupCardDeleteSelector = '.popup_delete';
 export const avatarImageSelector = '.profile__avatar-img';
 export const buttonConfirmDelete = document.querySelector('.popup__button-delete');
+export const userId = '3c797f04ecd771076eea48ce';
 
 
 

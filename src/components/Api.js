@@ -4,37 +4,36 @@ export default class Api {
         this._token = token;
         this._groupId = groupId;
     }
+
+    _getResponse(res) {
+        if(res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
   
     getInitialCards() {
         return fetch(`${this._address}${this._groupId}/cards`, {
             headers: {
-                authorization: this._token
+                authorization: this._token,
+                'Content-Type': 'application/json'
             }
         })
-        .then(response => {
-            if(response.ok) {
-                return response.json();
-            }
-            return Promise.reject(`Ошибка ${response.status}`);
-        })
+            .then(res => this._getResponse(res));
     }
 
     getUserInfo(){
         return fetch(`${this._address}${this._groupId}/users/me`, {
             headers: {
-                authorization: this._token
+                authorization: this._token,
+                'Content-Type': 'application/json'
             }
         })
-        .then(response => {
-            if(response.ok){
-                return response.json();
-            }
-            return Promise.reject(`Ошибка ${response.status}`);
-        })
+            .then(res => this._getResponse(res));
     }
 
     setUserInfo(item){
-        fetch(`${this._address}${this._groupId}/users/me`, {
+        return fetch(`${this._address}${this._groupId}/users/me`, {
             method: 'PATCH',
             headers: {
               authorization: this._token,
@@ -45,16 +44,11 @@ export default class Api {
               about: item.decoration
             })
         })
-        .then(response => {
-            if(response.ok){
-                return response.json();
-            }
-            return Promise.reject(`Ошибка ${response.status}`);
-        })
+            .then(res => this._getResponse(res));
     }
 
     setUserAvatar(item){
-        fetch(`${this._address}${this._groupId}/users/me/avatar`, {
+        return fetch(`${this._address}${this._groupId}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
               authorization: this._token,
@@ -64,16 +58,11 @@ export default class Api {
               avatar: item.avatar
             })
         })
-        .then(response => {
-            if(response.ok){
-                return response.json();
-            }
-            return Promise.reject(`Ошибка ${response.status}`);
-        })
+            .then(res => this._getResponse(res));
     }
 
     addNewCard(item){
-        fetch(`${this._address}${this._groupId}/cards`, {
+        return fetch(`${this._address}${this._groupId}/cards`, {
             method: 'POST',
             headers: {
               authorization: this._token,
@@ -84,13 +73,40 @@ export default class Api {
                 link: item.link
             })
         })
-        .then(response => {
-            if(response.ok){
-                return response.json();
-            }
-            return Promise.reject(`Ошибка ${response.status}`);
-        })   
+            .then(res => this._getResponse(res));
     }
   
-    // другие методы работы с API
+    deleteCard(element) {
+        return fetch(`${this._address}${this._groupId}/cards/${element.cardId}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: this._token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => this._getResponse(res));
+    }
+
+    likeCard(cardId) {
+        return fetch(`${this._address}${this._groupId}/cards/likes/${cardId}`, {
+            method: 'PUT',
+            headers: {
+                authorization: this._token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => this._getResponse(res));
+    }
+
+
+    deleteLike(cardId) {
+        return fetch(`${this._address}${this._groupId}/cards/likes/${cardId}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: this._token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => this._getResponse(res));
+    }
   }
